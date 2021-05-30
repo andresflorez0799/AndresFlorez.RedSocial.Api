@@ -1,6 +1,8 @@
 using AndresFlorez.RedSocial.Api.Filter;
 using AndresFlorez.RedSocial.Api.Models;
 using AndresFlorez.RedSocial.Api.Services;
+using AndresFlorez.RedSocial.Logica.Contrato;
+using AndresFlorez.RedSocial.Logica.Implementacion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -104,10 +106,12 @@ namespace AndresFlorez.RedSocial.Api
                 });
             });
 
-
-
             //injection of User Login Api
             services.AddScoped<IUserAuth, UserAuth>();
+
+            //injection controller api
+            services.AddScoped<IUsuarioBl, UsuarioBl>();
+            services.AddScoped<IPublicacionBl, PublicacionBl>();
 
             //Call App Setting from config file dependency Inyect
             var appSettingsSection = Configuration.GetSection("AppSettings");

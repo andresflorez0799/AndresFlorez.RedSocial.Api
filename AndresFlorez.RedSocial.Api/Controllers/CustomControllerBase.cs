@@ -8,12 +8,19 @@ namespace AndresFlorez.RedSocial.Api.Controllers
 {
     public class CustomControllerBase : ControllerBase
     {
-
-        protected ApiResponse<T> GetResponseApi<T>(T data, int code, bool state)
+        protected enum RespuestaHttp 
+        {
+            BadRequest = 400,
+            Unauthorized = 401,
+            Ok = 200,
+            Created = 201,
+            NotFound = 404
+        }
+        protected ApiResponse<T> GetResponseApi<T>(T data, RespuestaHttp code, bool state)
         {
             var response = new ApiResponse<T>
             {
-                RequestCode = code,
+                RequestCode = (int)code,
                 RequestState = state,
                 RequestData = data
             };

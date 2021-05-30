@@ -5,5 +5,7 @@ namespace AndresFlorez.RedSocial.Logica.Contrato
     public interface IUsuarioBl
     {
         RsocialUsuario GetByEmail(string email);
+
+        int CrearUsuario(RsocialUsuario usuario);
     }
 }

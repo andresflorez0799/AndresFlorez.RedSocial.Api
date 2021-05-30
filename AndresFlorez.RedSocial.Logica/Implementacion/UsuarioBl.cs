@@ -9,9 +9,16 @@ namespace AndresFlorez.RedSocial.Logica.Implementacion
     {
         private readonly IRepositorio<RsocialUsuario> _repositorio;
 
-        public UsuarioBl() 
+        public UsuarioBl()
         {
             _repositorio = new Repositorio<RsocialUsuario>();
+        }
+
+        public int CrearUsuario(RsocialUsuario usuario)
+        {
+            if (usuario != null && !string.IsNullOrEmpty(usuario.Nombre) && !string.IsNullOrEmpty(usuario.Contrasena))
+                return _repositorio.Agregar(usuario);
+            return 0;
         }
 
         public RsocialUsuario GetByEmail(string email)

@@ -5,7 +5,7 @@ using System;
 
 namespace AndresFlorez.RedSocial.Api.Controllers.auth
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class LoginController : CustomControllerBase
     {
@@ -23,9 +23,9 @@ namespace AndresFlorez.RedSocial.Api.Controllers.auth
                 UserAuthResponse validacionUsuario = _userService.Auth(model);
                 if (validacionUsuario != null && !string.IsNullOrEmpty(validacionUsuario.Token))
                 {
-                    return Ok(GetResponseApi(validacionUsuario, 200, true));
+                    return Ok(GetResponseApi(validacionUsuario, RespuestaHttp.Ok, true));
                 }
-                return Ok(GetResponseApi(false, 404, false));
+                return Ok(GetResponseApi(false, RespuestaHttp.Unauthorized, false));
             }
             catch (Exception)
             {
@@ -33,12 +33,12 @@ namespace AndresFlorez.RedSocial.Api.Controllers.auth
             }
         }
 
-        [HttpGet("validate-token")]
+        [HttpPost("validate-token")]
         public IActionResult ValidarToken(string token)
         {
             try
             {
-                return Ok(GetResponseApi(_userService.ValidateToken(token), 200, true));
+                return Ok(GetResponseApi(_userService.ValidateToken(token), RespuestaHttp.Ok, true));
             }
             catch (Exception)
             {
