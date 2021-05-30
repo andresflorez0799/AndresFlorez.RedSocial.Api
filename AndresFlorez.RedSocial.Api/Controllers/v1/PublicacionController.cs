@@ -177,7 +177,8 @@ namespace AndresFlorez.RedSocial.Api.Controllers.v1
         }
 
 
-
+        
+        
         private IList<Fichero> GetFicheroVideos(ICollection<RsocialPublicacionVideo> videos)
         {
             IList<Fichero> resultado = new List<Fichero>();
