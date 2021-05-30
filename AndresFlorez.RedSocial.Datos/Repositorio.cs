@@ -39,7 +39,8 @@ namespace AndresFlorez.RedSocial.Datos
         {
             try
             {
-                _context.Entry(entidad).State = EntityState.Added;
+                //_context.Entry(entidad).State = EntityState.Added;
+                _context.Add(entidad);
                 _context.SaveChanges();
                 return entidad.Id;
             }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
 
 namespace AndresFlorez.RedSocial.Api.Models.ViewModels
 {
@@ -8,5 +10,8 @@ namespace AndresFlorez.RedSocial.Api.Models.ViewModels
         public int IdEstado { get; set; }
         public DateTime Fecha { get; set; }
         public string Texto { get; set; }
+        public IList<IFormFile> Videos { get; set; }
+        public IList<IFormFile> Archivos { get; set; } 
+        public IList<IFormFile> Imagenes { get; set; }
     }
 }

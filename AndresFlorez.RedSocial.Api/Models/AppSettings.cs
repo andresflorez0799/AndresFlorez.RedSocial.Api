@@ -6,5 +6,9 @@
         public string JWTAudience { get; set; }
         public string JWTIssuer { get; set; }
 
+        public string DIRFolderVideos { get; set; }
+        public string DIRFolderImagenes { get; set; }
+        public string DIRFolderArchivos { get; set; }
     }
 }
+
