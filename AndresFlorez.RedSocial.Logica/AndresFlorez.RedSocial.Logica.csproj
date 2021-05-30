@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AndresFlorez.RedSocial.Datos\AndresFlorez.RedSocial.Datos.csproj" />
+    <ProjectReference Include="..\AndresFlorez.RedSocial.Modelo\AndresFlorez.RedSocial.Modelo.csproj" />
+  </ItemGroup>
+
 </Project>
