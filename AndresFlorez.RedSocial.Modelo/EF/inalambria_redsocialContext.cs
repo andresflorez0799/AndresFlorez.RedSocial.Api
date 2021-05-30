@@ -262,6 +262,10 @@ namespace AndresFlorez.RedSocial.Modelo.EF
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Contrasena)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(250)

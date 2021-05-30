@@ -18,6 +18,7 @@ namespace AndresFlorez.RedSocial.Modelo.EF
         public string Apellido { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
+        public string Contrasena { get; set; }
         public bool IsBloqueado { get; set; }
         public bool? IsActivo { get; set; }
         public DateTime FechaCreacion { get; set; }

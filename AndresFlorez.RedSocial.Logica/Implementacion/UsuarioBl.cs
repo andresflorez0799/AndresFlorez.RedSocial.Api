@@ -9,6 +9,11 @@ namespace AndresFlorez.RedSocial.Logica.Implementacion
     {
         private readonly IRepositorio<RsocialUsuario> _repositorio;
 
+        public UsuarioBl() 
+        {
+            _repositorio = new Repositorio<RsocialUsuario>();
+        }
+
         public RsocialUsuario GetByEmail(string email)
         {
             this.parametrosQuery.Where = s => s.Email == email;
