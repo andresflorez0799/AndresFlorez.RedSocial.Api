@@ -56,7 +56,35 @@ namespace AndresFlorez.RedSocial.Api.Controllers.v1
                 return BadRequest("Modelo de petición requerido");
         }
 
+        [HttpGet("")]
+        public IActionResult Get()
+        {
+            var claimsUser = GetClaimsAuthToken();
+            if (claimsUser.Id > 0)
+            {
+                var publicaciones = _logica.ConsultarPublicacion();
 
+                if (publicaciones != null)
+                {
+                    List<PublicacionBinaryViewModel> resultado = new();
+                    foreach (var item in publicaciones)
+                    {
+                        PublicacionBinaryViewModel modelo = new();
+                        modelo.IdUsuario = item.IdUsuario;
+                        modelo.Texto = item.Texto;
+                        modelo.Fecha = item.Fecha;
+                        modelo.Videos = GetFicheroVideos(item.RsocialPublicacionVideos);
+                        modelo.Imagenes = GetFicheroImagenes(item.RsocialPublicacionImagens);
+                        modelo.Archivos = GetFicheroArchivos(item.RsocialPublicacionArchivos);
+                        resultado.Add(modelo);
+                    }
+                    return Ok(GetResponseApi(resultado, RespuestaHttp.Ok, true));
+                }
+                return Ok(GetResponseApi(1, RespuestaHttp.Ok, false));
+            }
+            else
+                return Ok(GetResponseApi(false, RespuestaHttp.Unauthorized, false));
+        }
 
 
         #region Helpers
@@ -65,9 +93,9 @@ namespace AndresFlorez.RedSocial.Api.Controllers.v1
         /// </summary>
         /// <param name="archivos"></param>
         /// <returns></returns>
-        private ICollection<RsocialPublicacionVideo> ObtenerVideos(IList<IFormFile> archivos) 
+        private ICollection<RsocialPublicacionVideo> ObtenerVideos(IList<IFormFile> archivos)
         {
-            ICollection<RsocialPublicacionVideo> videos = new List<RsocialPublicacionVideo>();           
+            ICollection<RsocialPublicacionVideo> videos = new List<RsocialPublicacionVideo>();
             if (archivos != null && archivos.Count > 0)
             {
                 ValidarDirectorio(_appSettings.DIRFolderVideos);
@@ -142,10 +170,55 @@ namespace AndresFlorez.RedSocial.Api.Controllers.v1
             return videos;
         }
 
-        private void ValidarDirectorio(string directorioRaiz) 
+        private void ValidarDirectorio(string directorioRaiz)
         {
             if (!Directory.Exists(directorioRaiz))
                 Directory.CreateDirectory(directorioRaiz);
+        }
+
+
+
+        private IList<Fichero> GetFicheroVideos(ICollection<RsocialPublicacionVideo> videos)
+        {
+            IList<Fichero> resultado = new List<Fichero>();
+            foreach (var item in videos)
+            {
+                resultado.Add(new Fichero()
+                {
+                    Nombre = item.VideoNombre,
+                    Extension = item.VideoExtension,
+                    Archivo = System.IO.File.ReadAllBytes(item.VideoRuta)
+                });
+            }
+            return resultado;
+        }
+        private IList<Fichero> GetFicheroImagenes(ICollection<RsocialPublicacionImagen> videos)
+        {
+            IList<Fichero> resultado = new List<Fichero>();
+            foreach (var item in videos)
+            {
+                resultado.Add(new Fichero()
+                {
+                    Nombre = item.ImagenNombre,
+                    Extension = item.ImagenExtension,
+                    Archivo = System.IO.File.ReadAllBytes(item.ImagenRuta)
+                });
+            }
+            return resultado;
+        }
+        private IList<Fichero> GetFicheroArchivos(ICollection<RsocialPublicacionArchivo> videos)
+        {
+            IList<Fichero> resultado = new List<Fichero>();
+            foreach (var item in videos)
+            {
+                resultado.Add(new Fichero()
+                {
+                    Nombre = item.ArchivoNombre,
+                    Extension = item.ArchivoExtension,
+                    Archivo = System.IO.File.ReadAllBytes(item.ArchivoRuta)
+                });
+            }
+            return resultado;
         }
         #endregion
     }

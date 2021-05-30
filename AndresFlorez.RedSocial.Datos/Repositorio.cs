@@ -98,12 +98,16 @@ namespace AndresFlorez.RedSocial.Datos
                 Expression<Func<T, bool>> whereTrue = x => true;
                 var where = (_param.Where == null) ? whereTrue : _param.Where;
 
-                if (includes != null && includes.Any())
-                    return _context
-                        .Set<T>()
-                        .Where(where)
-                        .Include(string.Join(",", includes))
-                        .ToList();
+                if (includes != null && includes.Any()) 
+                {
+                    IQueryable<T> query = _context.Set<T>().Where(where);
+                    foreach (var item in includes)
+                    {
+                        query = query.Include(item);
+                    }
+                    return query.AsNoTracking().ToList();
+                    //return _context.Set<T>().Where(where).Include(string.Join(",", includes)).ToList();
+                }
                 else
                     return _context
                         .Set<T>()
