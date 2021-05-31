@@ -1,4 +1,5 @@
 using AndresFlorez.RedSocial.Api.Filter;
+using AndresFlorez.RedSocial.Api.Hubs;
 using AndresFlorez.RedSocial.Api.Models;
 using AndresFlorez.RedSocial.Api.Services;
 using AndresFlorez.RedSocial.Logica.Contrato;
@@ -6,6 +7,7 @@ using AndresFlorez.RedSocial.Logica.Implementacion;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -76,9 +78,6 @@ namespace AndresFlorez.RedSocial.Api
                         Description = "Api para la gestion de proyecto web Red Social.",
                         License = new OpenApiLicense() { Name = "Proyecto de Prueba Tecnica" }
                     });
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //swagger.IncludeXmlComments(xmlPath);
                 swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
@@ -200,6 +199,10 @@ namespace AndresFlorez.RedSocial.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chathub", options =>
+                {
+                    options.Transports = HttpTransportType.WebSockets | HttpTransportType.LongPolling;
+                }).RequireCors(MyCors);
             });
         }
     }
