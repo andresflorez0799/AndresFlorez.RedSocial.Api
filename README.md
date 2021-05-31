@@ -2,7 +2,7 @@
 - Api REST desarrollada en .Net5 con lenguaje de programación C#
 - Se utiliza Swagger para su documentación (.Net5 por defecto con algunas modificaciones)
 - Entity Framework Core para la gestion de los datos creada en sql server
-- Sql Server 2019 Developer Edition (el proyecto cuenta con el script necesario de creación)
+- Sql Server 2019 Developer Edition (el proyecto cuenta con el script necesario de creación dentro del proyecto de Modelo 'SQL Query Creacion BD.sql')
 - Se crearon capa de manejo de datos y logica de forma generica
 - Se agrego sistema de autenticacion  con JWT donde se debe contar con usuario y contraseña
   para obtener token, el cual sera usado para las peticiones posteriores.
